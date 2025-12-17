@@ -1,0 +1,35 @@
+name: Thesis Experiment
+on: workflow_dispatch # This button lets you start the runs manually
+
+jobs:
+  # PHASE 1: SEQUENTIAL BASELINE
+  sequential-baseline:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Run Cypress Sequentially
+        uses: cypress-io/github-action@v6
+        with:
+          browser: chrome
+
+  # PHASE 2: PARALLEL OPTIMIZATION
+  parallel-optimization:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # This creates 4 runners at the same time
+        containers: [1, 2, 3, 4]
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      - name: Run Cypress in Parallel
+        uses: cypress-io/github-action@v6
+        with:
+          record: true
+          parallel: true
+          browser: chrome
+        env:
+          # We will set this key up in GitHub settings next
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }} 
