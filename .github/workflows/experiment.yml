@@ -1,5 +1,5 @@
 name: Thesis Experiment
-on: workflow_dispatch # This button lets you start the runs manually
+on: workflow_dispatch
 
 jobs:
   # PHASE 1: SEQUENTIAL BASELINE
@@ -30,6 +30,5 @@ jobs:
           record: true
           parallel: true
           browser: chrome
-        env:
-          # We will set this key up in GitHub settings next
+        env:     
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }} 
